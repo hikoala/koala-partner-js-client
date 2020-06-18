@@ -1,99 +1,230 @@
 [![TypeScript version][ts-badge]][typescript-39]
 [![Node.js version][nodejs-badge]][nodejs]
-[![APLv2][license-badge]][LICENSE]
+[![APLv2][license-badge]][license]
 [![Build Status - Travis][travis-badge]][travis-ci]
 [![Build Status - GitHub Actions][gha-badge]][gha-ci]
 [![Sponsor][sponsor-badge]][sponsor]
 
-# node-typescript-boilerplate
+# Koala partner NodeJS client
 
-👩🏻‍💻 Developer Ready: A comprehensive template. Works out of the box for most [Node.js][nodejs] projects.
+## Creating the client.
 
-🏃🏽 Instant Value: All basic tools included and configured:
+### Development.
 
-+ [TypeScript][typescript] [3.9][typescript-39]
-+ [ESLint][eslint] with some initial rules recommendation
-+ [Jest][jest] for fast unit testing and code coverage
-+ Type definitions for Node.js and Jest
-+ [Prettier][prettier] to enforce consistent code style
-+ NPM [scripts](#available-scripts) for common operations
-+ simple example of TypeScript code and unit test
-+ .editorconfig for consistent file format
-+ example configuration for [GitHub Actions][gh-actions] and [Travis CI][travis]
-
-🤲 Free as in speech: available under the APLv2 license.
-
-## Getting Started
-
-This project is intended to be used with the latest Active LTS release of [Node.js][nodejs].
-
-### Use as a repository template
-
-To start, just click the **[Use template][repo-template-action]** link (or the green button). Now start adding your code in the `src` and unit tests in the `__tests__` directories.
-
-### Clone repository
-
-To clone the repository use the following commands:
-
-```sh
-git clone https://github.com/jsynowiec/node-typescript-boilerplate
-cd node-typescript-boilerplate
-npm install
+```typescript
+import { Koala } from 'Koala';
+const client = new Koala({ token: '<your development token>' });
 ```
 
-### Download latest release
+### Production.
 
-Download and unzip current `master` branch or one of tags:
-
-```sh
-wget https://github.com/jsynowiec/node-typescript-boilerplate/archive/master.zip -O node-typescript-boilerplate.zip
-unzip node-typescript-boilerplate.zip && rm node-typescript-boilerplate.zip
+```typescript
+import { Koala, ServerURL } from 'Koala';
+const client = new Koala({
+  token: '<your production token>',
+  target: ServerURL.production,
+});
 ```
 
-## Available Scripts
+Note: You can use `KOALA_PARTNER_TOKEN` to set token.
 
-+ `clean` - remove coverage data, Jest cache and transpiled files,
-+ `build` - transpile TypeScript to ES6,
-+ `build:watch` - interactive watch mode to automatically transpile source files,
-+ `lint` - lint source files and tests,
-+ `test` - run tests,
-+ `test:watch` - interactive watch mode to automatically re-run tests
+## Quote
 
-## Additional Informations
+```typescript
+import { Koala } from 'Koala';
+const client = new Koala({ token: '<your development token>' });
+const quoteQuery = new QuoteQuery({
+  // The flights attendants.
+  attendants: [
+    new MinimalAttendant({
+      ageRange: AgeRange.Adult,
+    }),
+    new MinimalAttendant({
+      ageRange: AgeRange.Adult,
+    }),
+  ],
+  // The price of the booking (without ancillaries)
+  price: 1030.4,
+  // The currency code of the booking.
+  currencyCode: 'EUR',
+  // The itinerary.
+  flights: [
+    new MinimalFlight({
+      // The different flights of the itinerary.
+      legs: [
+        new MinimalLeg({
+          departureAirportIATA: 'CDG',
+          arrivalAirportIATA: 'JFK',
+          departureDate: DateTime.utc().plus({ days: 10 }),
+        }),
+      ],
+    }),
+    new MinimalFlight({
+      // The different flights of the itinerary.
+      legs: [
+        new MinimalLeg({
+          departureAirportIATA: 'JFK',
+          arrivalAirportIATA: 'CDG',
+          departureDate: DateTime.utc().plus({ days: 17 }),
+        }),
+      ],
+    }),
+  ],
+});
 
-### Writing tests in JavaScript
+const quotes = client.quotes(quoteQuery);
+// Expected:
+// [
+//   {
+//     name: 'policy 1',
+//     price: { EUR: 12.5 },
+//     // ...
+//   },
+//   {
+//     name: 'policy 2',
+//     price: { EUR: 14.5 },
+//     // ...
+//   },
+//   {
+//     name: 'policy 3',
+//     price: { EUR: 16.5 },
+//     // ...
+//   },
+// ]
+```
 
-Writing unit tests in TypeScript can sometimes be troublesome and confusing. Especially when mocking dependencies and using spies.
+## Quote
 
-This is **optional**, but if you want to learn how to write JavaScript tests for TypeScript modules, read the [corresponding wiki page][wiki-js-tests].
+```typescript
+import { Koala } from 'koala-partner-client';
+import {
+  MinimalAttendant,
+  MinimalFlight,
+  MinimalLeg,
+  QuoteQuery,
+} from 'koala-partner-client/types';
 
-## Backers & Sponsors
+const client = new Koala({ token: '<your development token>' });
+const quoteQuery = new QuoteQuery({
+  // The flights attendants.
+  attendants: [
+    new MinimalAttendant({
+      ageRange: AgeRange.Adult,
+    }),
+    new MinimalAttendant({
+      ageRange: AgeRange.Adult,
+    }),
+  ],
+  // The price of the booking (without ancillaries)
+  price: 1030.4,
+  // The currency code of the booking.
+  currencyCode: 'EUR',
+  // The itinerary.
+  flights: [
+    new Flight({
+      // The different flights of the itinerary.
+      legs: [
+        new Leg({
+          departureAirportIATA: 'CDG',
+          arrivalAirportIATA: 'JFK',
+          departureDate: DateTime.utc().plus({ days: 10 }),
+          arrivalDate: DateTime.utc().plus({ days: 10, hours: 4 }),
+          airlineIATA: 'AF',
+          flightNumber: '2131',
+        }),
+      ],
+    }),
+    new Flight({
+      // The different flights of the itinerary.
+      legs: [
+        new Leg({
+          departureAirportIATA: 'JFK',
+          arrivalAirportIATA: 'CDG',
+          departureDate: DateTime.utc().plus({ days: 17 }),
+          arrivalDate: DateTime.utc().plus({ days: 17, hours: 4 }),
+          airlineIATA: 'AF',
+          flightNumber: '2222',
+        }),
+      ],
+    }),
+  ],
+});
 
-Support this project by becoming a sponsor.
+const quotes = client.quotes(quoteQuery);
+// Expected:
+// [
+//   {
+//     name: 'policy 1',
+//     price: { EUR: 12.5 },
+//     // ...
+//   },
+//   {
+//     name: 'policy 2',
+//     price: { EUR: 14.5 },
+//     // ...
+//   },
+//   {
+//     name: 'policy 3',
+//     price: { EUR: 16.5 },
+//     // ...
+//   },
+// ]
+```
 
-## License
-Licensed under the APLv2. See the [LICENSE](https://github.com/jsynowiec/node-typescript-boilerplate/blob/master/LICENSE) file for details.
+## Subscription.
 
-[ts-badge]: https://img.shields.io/badge/TypeScript-3.9-blue.svg
-[nodejs-badge]: https://img.shields.io/badge/Node.js->=%2012.13-blue.svg
-[nodejs]: https://nodejs.org/dist/latest-v12.x/docs/api/
-[travis-badge]: https://travis-ci.org/jsynowiec/node-typescript-boilerplate.svg?branch=master
-[travis-ci]: https://travis-ci.org/jsynowiec/node-typescript-boilerplate
-[gha-badge]: https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fjsynowiec%2Fnode-typescript-boilerplate%2Fbadge&style=flat
-[gha-ci]: https://github.com/jsynowiec/node-typescript-boilerplate/actions
-[typescript]: https://www.typescriptlang.org/
-[typescript-39]: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html
-[license-badge]: https://img.shields.io/badge/license-APLv2-blue.svg
-[license]: https://github.com/jsynowiec/node-typescript-boilerplate/blob/master/LICENSE
+```typescript
+import { Koala } from 'koala-partner-client';
+import {
+  Attendant,
+  Flight,
+  Leg,
+  SubscribeQuery,
+  Client,
+} from 'koala-partner-client/types';
+const client = new Koala({ token: '<your token>' });
 
-[sponsor-badge]: https://img.shields.io/badge/♥-Sponsor-fc0fb5.svg
-[sponsor]: https://github.com/sponsors/jsynowiec
+const quoteQuery: QuoteQuery = {}; // Your quote query.
+const quotes = await client.quotes(quoteQuery);
 
-[jest]: https://facebook.github.io/jest/
-[eslint]: https://github.com/eslint/eslint
-[wiki-js-tests]: https://github.com/jsynowiec/node-typescript-boilerplate/wiki/Unit-tests-in-plain-JavaScript
-[prettier]: https://prettier.io
-[gh-actions]: https://github.com/features/actions
-[travis]: https://travis-ci.org
+// Select the right quote.
+const quote: Quote = quotes[1];
 
-[repo-template-action]: https://github.com/jsynowiec/node-typescript-boilerplate/generate
+// Create a subscription.
+const subscribe = new SubscribeQuery({
+  // The info about the client (the person booking the product).
+  client: new Client({
+    firstName: 'Alain',
+    lastName: 'Prost',
+    email: 'alain.prost@gmail.com',
+  }),
+  // The booking (a detailed version of the quote)
+  booking: new Booking({
+    // The attendants (a detailed version).
+    attendants: [
+      new Attendant({
+        firstName: 'Christine',
+        lastName: 'Bravo',
+        ageRange: AgeRange.Adult,
+      }),
+      new Attendant({
+        firstName: 'Alain',
+        lastName: 'Prost',
+        ageRange: AgeRange.Adult,
+      }),
+    ],
+    // The booking number (must be unique from your system).
+    number: 'K131E49',
+    // The price of the booking (without ancillaries)
+    price: quoteQuery.price,
+    // The currency code of the booking.
+    currencyCode: quoteQuery.currencyCode,
+    // The flights from the quote query.
+    flights: quoteQuery.flights,
+  }),
+  // The unaltered quote.
+  quote,
+});
+
+const subscription = await client.subscribe(subscribe);
+```
