@@ -26,16 +26,17 @@ class Options {
   version: Version = Version.default;
 }
 
-export default class Koala {
+export class Koala {
   version = Version.default;
   target: string = ServerURL.default;
   token: string;
 
-  constructor(options: Partial<Options>) {
-    this.token = process.env.KOALA_PARTNER_TOKEN || options.token;
+  constructor(options?: Partial<Options>) {
+    const _options: Partial<Options> = options ?? {};
+    this.token = process.env.KOALA_PARTNER_TOKEN || _options.token;
     this.target =
-      options.target ?? (process.env.KOALA_PARTNER_API || ServerURL.default);
-    this.version = options.version ?? Version.default;
+      _options.target ?? (process.env.KOALA_PARTNER_API || ServerURL.default);
+    this.version = _options.version ?? Version.default;
   }
 
   private async sendRequest(

@@ -1,19 +1,21 @@
 import _ from 'lodash';
-import Koala from '../src/client';
-import MinimalAttendant from '../src/types/attendant-min';
-import MinimalLeg from '../src/types/leg-min';
-import QuoteQuery from '../src/types/quote-query';
-import AgeRange from '../src/types/age-range';
-import MinimalFlight from '../src/types/flight-min';
-import DateTime from '../src/types/date';
-import Quote from '../src/types/quote';
-import SubscribeQuery from '../src/types/subscribe';
-import Client from '../src/types/client';
-import Booking from '../src/types/booking';
-import Attendant from '../src/types/attendant';
-import Flight from '../src/types/flight';
-import Leg from '../src/types/leg';
-import APIError from '../src/types/error';
+import { Koala } from '../src/client';
+import {
+  MinimalAttendant,
+  MinimalLeg,
+  QuoteQuery,
+  AgeRange,
+  MinimalFlight,
+  DateTime,
+  Quote,
+  SubscribeQuery,
+  Client,
+  Booking,
+  Attendant,
+  Flight,
+  Leg,
+  APIError,
+} from '../src/types';
 
 let client: Koala;
 let quoteQuery: QuoteQuery;
@@ -39,7 +41,7 @@ describe('#API', () => {
     beforeEach(() => {
       client = new Koala({
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS29hbGEiLCJlbWFpbCI6ImFudG9ueUBoaWtvYWxhLmNvIiwiZW52IjoicHJvZHVjdGlvbiIsInV1aWQiOiI5ZWUzNDg1Ni0xYjAxLTQ2ZDEtYmM2OS0xYzBjMjY4MDJhNzkiLCJpYXQiOjE1ODg2OTMzODZ9.cb2l3t9hxctv42YFuJyrv7A-bpdQnSk-Yc2qPxEkbCM',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS29hbGEiLCJlbWFpbCI6ImRldmVsb3BlcnNAaGlrb2FsYS5jbyIsInV1aWQiOiIwNmQ0MTFkZi1lYzhiLTQ0NDQtYjViYy1hZjM5NWMxNjUwZDQiLCJpYXQiOjE1Nzk2ODU3NTZ9.5dCHJSZ-g9A7vtbaFSV3mqEo-f65ZQVPOJQj1QJ2W-A',
       });
 
       quoteQuery = new QuoteQuery({
@@ -71,8 +73,8 @@ describe('#API', () => {
       it('should return 400 if the quote is ill-formed', async () => {
         await expect(client.quotes(undefined)).rejects.toEqual(
           new APIError({
-            status: 401,
-            message: 'you do not have access to this resource',
+            status: 400,
+            message: `Missing field 'booking'.`,
             source: 'self',
           }),
         );
@@ -90,9 +92,9 @@ describe('#API', () => {
         );
       });
 
-      it.only('should return 400 if a date is ill-formed', async () => {
+      it('should return 400 if a date is ill-formed', async () => {
         const query = quoteQuery;
-        // XXX: Wrong error message due to 
+        // XXX: Wrong error message due to
         const date = DateTime.local().plus({
           years: 19210910201201200912840981,
         });
