@@ -9,19 +9,25 @@
 
 Client for Koala partner's API (See https://development-partner-api.hikoala.co/api-docs).
 
+## Installation.
+
+```bash
+npm install --save koala-partner-client
+```
+
 ## Creating the client.
 
 ### Development.
 
 ```typescript
-import { Koala } from 'Koala';
+import { Koala } from 'koala-partner-client';
 const client = new Koala({ token: '<your development token>' });
 ```
 
 ### Production.
 
 ```typescript
-import { Koala, ServerURL } from 'Koala';
+import { Koala, ServerURL } from 'koala-partner-client';
 const client = new Koala({
   token: '<your production token>',
   target: ServerURL.production,
@@ -39,7 +45,7 @@ import {
   MinimalFlight,
   MinimalLeg,
   QuoteQuery,
-} from 'koala-partner-client/types';
+} from 'koala-partner-client/lib/types';
 
 const client = new Koala({ token: '<your development token>' });
 const quoteQuery = new QuoteQuery({
@@ -87,7 +93,7 @@ const quoteQuery = new QuoteQuery({
   ],
 });
 
-const quotes = client.quotes(quoteQuery);
+const quotes = await client.quotes(quoteQuery);
 // Expected:
 // [
 //   {
@@ -118,7 +124,7 @@ import {
   Leg,
   SubscribeQuery,
   Client,
-} from 'koala-partner-client/types';
+} from 'koala-partner-client/lib/types';
 const client = new Koala({ token: '<your token>' });
 
 const quoteQuery: QuoteQuery = {}; // Your quote query.
