@@ -9,7 +9,7 @@ export default class DateTime extends LuxonDateTime {
     if (args === undefined) return super.toISO();
     if (args.includeOffset && this.offset === 0) {
       const iso = super.toISO(args);
-      return iso.replace('Z', '+00:00');
+      return iso.replace('Z', '-00:00');
     }
     return super.toISO(args);
   }
