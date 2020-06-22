@@ -12,3 +12,5 @@ tsconfig.json
 tsconfig.release.json
 lib/**/*.test.js
 lib/**/*.test.d.ts
+__tests__
+coverage/
