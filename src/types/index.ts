@@ -1,3 +1,5 @@
+// find partners-client/src/types -maxdepth 1 -type f -not -name index.ts -not -name validators.ts | xargs grep export | cut -d':' -f2 | sed  -E "s/export default (class)?//g" | sed 's/^[ \t]*//;s/[ \t]*$//' | cut -d' ' -f1
+
 export { default as AgeRange } from './age-range';
 export { default as APIError } from './error';
 export { default as Attendant } from './attendant';
