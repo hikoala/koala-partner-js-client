@@ -145,7 +145,7 @@ describe('#API', () => {
       });
     });
 
-    describe.skip('subscribe', () => {
+    describe('subscribe', () => {
       it('should be possible to subscribe', async () => {
         const flights = [
           new Flight({
@@ -206,8 +206,7 @@ describe('#API', () => {
         });
 
         const subscription = await client.subscribe(subscribe);
-        console.log(subscription);
-        expect(subscription).toBe(true);
+        expect(subscription).toBeDefined();
       });
     });
   });

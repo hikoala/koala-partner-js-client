@@ -1,5 +1,5 @@
 {
-  "name": "koala-backend-client",
+  "name": "koala-partner-client",
   "version": "0.1.0",
   "description": "Node client for the Koala partner API",
   "engines": {

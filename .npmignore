@@ -1,0 +1,14 @@
+node_modules/
+src/
+.editorconfig
+.eslintrc.json
+.eslintignore
+.git
+.gitignore
+.gitlab-ci.yml
+.prettierrc
+jest.config.js
+tsconfig.json
+tsconfig.release.json
+lib/**/*.test.js
+lib/**/*.test.d.ts
