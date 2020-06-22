@@ -7,6 +7,8 @@
 
 # Koala partner NodeJS client
 
+Client for Koala partner's API (See https://development-partner-api.hikoala.co/api-docs).
+
 ## Creating the client.
 
 ### Development.
