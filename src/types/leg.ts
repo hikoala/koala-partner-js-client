@@ -50,9 +50,6 @@ export default class Leg extends MinimalLeg implements Interface {
       ...MinimalLeg._fromJSON(data as MinimalJSON),
       arrivalDate: DateTime.fromISO(
         getField(data.arrival_date, 'leg.arrival_date'),
-        {
-          setZone: true,
-        },
       ),
       airlineIATA: getField(data.airline_iata, 'leg.airline_iata'),
       flightNumber: getField(data.flight_number, 'leg.flight_number'),

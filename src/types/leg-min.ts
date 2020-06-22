@@ -32,9 +32,6 @@ export default class MinimalLeg implements Interface {
     return {
       departureDate: DateTime.fromISO(
         getField(data.departure_date, 'leg.departure_date'),
-        {
-          setZone: true,
-        },
       ),
       departureAirportIATA: getField(
         data.departure_airport_iata,
