@@ -6,6 +6,7 @@ import {
 
 export default class DateTime extends LuxonDateTime {
   toISO(args?: ToISOTimeOptions): string {
+    if (args === undefined) return super.toISO();
     if (args.includeOffset && this.offset === 0) {
       const iso = super.toISO(args);
       return iso.replace('Z', '+00:00');
@@ -16,7 +17,9 @@ export default class DateTime extends LuxonDateTime {
   static fromISO(text: string, options?: DateTimeOptions): DateTime {
     const instance = LuxonDateTime.fromISO(text, options);
     instance.toISO = DateTime.prototype.toISO;
-    instance.toJSON = () => DateTime.prototype.toISO({ includeOffset: true });
+    instance.toJSON = function () {
+      return this.toISO({ includeOffset: true });
+    };
     return instance as DateTime;
   }
 }
