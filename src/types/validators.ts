@@ -8,5 +8,5 @@ export function getField<T>(value: T, field: string): T {
 }
 
 export function isDate(value: DateTime): value is DateTime {
-  return value instanceof DateTime && value.isValid;
+  return value.isValid;
 }

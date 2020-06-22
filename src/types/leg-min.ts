@@ -46,7 +46,7 @@ export default class MinimalLeg implements Interface {
       ),
     };
   }
-  
+
   static fromJSON(data: JSON): MinimalLeg {
     return new MinimalLeg(MinimalLeg._fromJSON(data));
   }

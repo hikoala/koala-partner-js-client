@@ -61,7 +61,7 @@ describe('#API', () => {
               new MinimalLeg({
                 departureAirportIATA: 'CDG',
                 arrivalAirportIATA: 'JFK',
-                departureDate: DateTime.utc().plus({ days: 10 }),
+                departureDate: DateTime.local().plus({ days: 10 }),
               }),
             ],
           }),
@@ -134,7 +134,7 @@ describe('#API', () => {
 
       it('should be possible to quote invalid', async () => {
         const query = quoteQuery;
-        query.flights[0].legs[0].departureDate = DateTime.utc().plus({
+        query.flights[0].legs[0].departureDate = DateTime.local().plus({
           hours: 12,
         });
         const quotes: Quote[] = await client.quotes(query);
@@ -153,10 +153,10 @@ describe('#API', () => {
               new Leg({
                 departureAirportIATA: 'CDG',
                 arrivalAirportIATA: 'JFK',
-                departureDate: DateTime.utc().plus({ days: 12 }),
+                departureDate: DateTime.local().plus({ days: 12 }),
                 airlineIATA: 'AF',
                 flightNumber: '1312',
-                arrivalDate: DateTime.utc().plus({ days: 16 }),
+                arrivalDate: DateTime.local().plus({ days: 16 }),
               }),
             ],
           }),
