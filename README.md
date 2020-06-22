@@ -1,10 +1,3 @@
-[![TypeScript version][ts-badge]][typescript-39]
-[![Node.js version][nodejs-badge]][nodejs]
-[![APLv2][license-badge]][license]
-[![Build Status - Travis][travis-badge]][travis-ci]
-[![Build Status - GitHub Actions][gha-badge]][gha-ci]
-[![Sponsor][sponsor-badge]][sponsor]
-
 # Koala partner NodeJS client
 
 Client for Koala partner's API (See https://development-partner-api.hikoala.co/api-docs).
