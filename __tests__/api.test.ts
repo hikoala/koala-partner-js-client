@@ -156,7 +156,7 @@ describe('#API', () => {
                 departureDate: DateTime.local().plus({ days: 12 }),
                 airlineIATA: 'AF',
                 flightNumber: '1312',
-                arrivalDate: DateTime.local().plus({ days: 16 }),
+                arrivalDate: DateTime.local().plus({ days: 16 }).toISO(),
               }),
             ],
           }),

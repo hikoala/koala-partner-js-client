@@ -63,8 +63,8 @@ const quoteQuery = new QuoteQuery({
         new Leg({
           departureAirportIATA: 'CDG',
           arrivalAirportIATA: 'JFK',
-          departureDate: DateTime.utc().plus({ days: 10 }),
-          arrivalDate: DateTime.utc().plus({ days: 10, hours: 4 }),
+          departureDate: '2021-06-22T18:10:15+02:00',
+          arrivalDate: '2021-06-22T21:10:15Z-04:00',
           airlineIATA: 'AF',
           flightNumber: '2131',
         }),
@@ -76,8 +76,8 @@ const quoteQuery = new QuoteQuery({
         new Leg({
           departureAirportIATA: 'JFK',
           arrivalAirportIATA: 'CDG',
-          departureDate: DateTime.utc().plus({ days: 17 }),
-          arrivalDate: DateTime.utc().plus({ days: 17, hours: 4 }),
+          departureDate: '2021-06-27T21:10:15Z-04:00',
+          arrivalDate: '2021-06-28T12:10:15Z+02:00',
           airlineIATA: 'AF',
           flightNumber: '2222',
         }),

@@ -1,7 +1,7 @@
 import DateTime from '../date';
 
 export default interface Interface {
-  departureDate: DateTime;
+  departureDate: DateTime | string;
 
   departureAirportIATA: string;
 

@@ -15,7 +15,12 @@ export default class MinimalLeg implements Interface {
   arrivalAirportIATA: string;
 
   constructor(data: Interface) {
-    this.departureDate = getField(data.departureDate, 'leg.departureDate');
+    const departureDate = getField(data.departureDate, 'leg.departureDate');
+    if (typeof departureDate === 'string') {
+      this.departureDate = DateTime.fromISO(departureDate as string);
+    } else {
+      this.departureDate = departureDate as DateTime;
+    }
     if (!isDate(this.departureDate)) throw new Error('Invalid date');
 
     this.departureAirportIATA = getField(

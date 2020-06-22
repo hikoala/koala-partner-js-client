@@ -36,6 +36,16 @@ describe('#Leg', () => {
     ).toThrow('Invalid date');
   });
 
+  it('should not be possible with an ill-formed iso date', () => {
+    expect(() =>
+      Leg.extendMinimal(minimalLeg, {
+        airlineIATA: 'AF',
+        flightNumber: '1312',
+        arrivalDate: '31',
+      }),
+    ).toThrow('Invalid date');
+  });
+
   it('should not be possible without arrival airline iata', () => {
     expect(() =>
       Leg.extendMinimal(minimalLeg, {
@@ -61,6 +71,16 @@ describe('#Leg', () => {
       airlineIATA: 'AF',
       flightNumber: '1312',
       arrivalDate: DateTime.fromJSDate(new Date()),
+    });
+    const copy = new Leg(leg);
+    expect(leg).toStrictEqual(copy);
+  });
+
+  it('should not be possible to create a leg using iso date string', () => {
+    const leg = Leg.extendMinimal(minimalLeg, {
+      airlineIATA: 'AF',
+      flightNumber: '1312',
+      arrivalDate: '2020-06-18T16:52:33.227Z',
     });
     const copy = new Leg(leg);
     expect(leg).toStrictEqual(copy);

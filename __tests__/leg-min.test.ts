@@ -29,6 +29,17 @@ describe('#MinimalLeg', () => {
     ).toThrow('Invalid date');
   });
 
+  it('should not be possible with an ill-formed iso string date', () => {
+    expect(
+      () =>
+        new MinimalLeg({
+          arrivalAirportIATA: 'CDG',
+          departureAirportIATA: 'JFK',
+          departureDate: '',
+        }),
+    ).toThrow('Invalid date');
+  });
+
   it('should not be possible without arrival airport iata', () => {
     expect(
       () =>
@@ -49,6 +60,15 @@ describe('#MinimalLeg', () => {
           departureDate: DateTime.fromJSDate(new Date()),
         }),
     ).toThrow('leg.departureAirportIATA is required');
+  });
+
+  it('should not be possible to create with an iso date string', () => {
+    const leg = new MinimalLeg({
+      arrivalAirportIATA: 'CDG',
+      departureAirportIATA: 'JFK',
+      departureDate: '2020-06-18T16:52:33.227Z',
+    });
+    expect(leg).toBeDefined();
   });
 
   it('should not be possible to create and copy', () => {

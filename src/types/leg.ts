@@ -6,7 +6,7 @@ import DateTime from './date';
 import { getField, isDate } from './validators';
 
 interface SelfInterface {
-  arrivalDate: DateTime;
+  arrivalDate: DateTime | string;
 
   airlineIATA: string;
 
@@ -32,7 +32,12 @@ export default class Leg extends MinimalLeg implements Interface {
 
   constructor(data: Interface) {
     super(data);
-    this.arrivalDate = getField(data.arrivalDate, 'leg.arrivalDate');
+    const arrivalDate = getField(data.arrivalDate, 'leg.arrivalDate');
+    if (typeof arrivalDate === 'string') {
+      this.arrivalDate = DateTime.fromISO(arrivalDate as string);
+    } else {
+      this.arrivalDate = arrivalDate as DateTime;
+    }
     if (!isDate(this.arrivalDate)) throw new Error('Invalid date');
     this.airlineIATA = getField(data.airlineIATA, 'leg.airlineIATA');
     this.flightNumber = getField(data.flightNumber, 'leg.flightNumber');
