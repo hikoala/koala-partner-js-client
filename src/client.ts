@@ -4,6 +4,8 @@ import Quote from './types/quote';
 import QuoteQuery from './types/quote-query';
 import SubscribeQuery from './types/subscribe';
 import Booking from './types/booking';
+import ProductStatus from './types/product-status';
+import Claim from './types/claim';
 
 export enum ServerURL {
   development = 'https://development-partner-api.hikoala.co',
@@ -86,5 +88,24 @@ export class Koala {
   async subscribe(query: SubscribeQuery): Promise<Booking> {
     const res = await this.sendRequest('POST', '/flights/subscribe', query);
     return Booking.fromJSON(res);
+  }
+
+  async checkProduct(
+    bookingNumber: string,
+    productId: number,
+  ): Promise<ProductStatus> {
+    const res = await this.sendRequest(
+      'GET',
+      `/flights/subscription/${bookingNumber}/claim/${productId}`,
+    );
+    return ProductStatus.fromJSON(res);
+  }
+
+  async claimProduct(bookingNumber: string, productId: number): Promise<Claim> {
+    const res = await this.sendRequest(
+      'POST',
+      `/flights/subscription/${bookingNumber}/claim/${productId}`,
+    );
+    return Claim.fromJSON(res);
   }
 }

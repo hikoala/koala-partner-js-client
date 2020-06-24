@@ -1,6 +1,6 @@
 {
   "name": "koala-partner-client",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Node client for the Koala partner API",
   "engines": {
     "node": ">= 14"

@@ -161,6 +161,7 @@ describe('#API', () => {
             ],
           }),
         ];
+
         const quoteQuery = new QuoteQuery({
           attendants: [
             new MinimalAttendant({
