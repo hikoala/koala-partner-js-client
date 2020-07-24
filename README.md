@@ -1,6 +1,6 @@
 # Koala partner NodeJS client
 
-Client for Koala partner's API (See https://development-partner-api.hikoala.co/api-docs).
+Client for Koala partner's API (See https://development-partner-api.hikoala.co/docs/partner/v1).
 
 ## Installation.
 
