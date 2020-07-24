@@ -3,6 +3,8 @@ export default interface JSON {
 
   attendants: any[];
 
+  places: any[];
+
   price: number;
 
   currency_code?: string;

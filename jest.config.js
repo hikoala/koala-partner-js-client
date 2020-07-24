@@ -4,6 +4,7 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest",
     "\\.ts$": ['ts-jest']
   },
+  testTimeout: 10000,
   moduleFileExtensions: [
     "ts",
     "tsx",

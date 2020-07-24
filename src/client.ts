@@ -17,7 +17,7 @@ export enum ServerURL {
 export enum Version {
   v0 = 'v0',
   v1 = 'v1',
-  default = 'v0',
+  default = 'v1',
 }
 
 class Options {
@@ -81,12 +81,12 @@ export class Koala {
   }
 
   async quotes(query: QuoteQuery): Promise<Quote[]> {
-    const res = await this.sendRequest('GET', '/flights/quotes', query);
+    const res = await this.sendRequest('GET', '/quotes', query);
     return Object.values(res).map(Quote.fromJSON);
   }
 
   async subscribe(query: SubscribeQuery): Promise<Booking> {
-    const res = await this.sendRequest('POST', '/flights/subscribe', query);
+    const res = await this.sendRequest('POST', '/subscribe', query);
     return Booking.fromJSON(res);
   }
 
@@ -96,7 +96,7 @@ export class Koala {
   ): Promise<ProductStatus> {
     const res = await this.sendRequest(
       'GET',
-      `/flights/subscription/${bookingNumber}/claim/${productId}`,
+      `/booking/${bookingNumber}/claim/${productId}`,
     );
     return ProductStatus.fromJSON(res);
   }
@@ -104,7 +104,7 @@ export class Koala {
   async claimProduct(bookingNumber: string, productId: number): Promise<Claim> {
     const res = await this.sendRequest(
       'POST',
-      `/flights/subscription/${bookingNumber}/claim/${productId}`,
+      `/booking/${bookingNumber}/claim/${productId}`,
     );
     return Claim.fromJSON(res);
   }

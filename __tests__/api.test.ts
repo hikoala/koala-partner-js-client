@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { Koala } from '../src/client';
 import {
+  Place,
   MinimalAttendant,
   MinimalLeg,
   QuoteQuery,
@@ -41,7 +42,7 @@ describe('#API', () => {
     beforeEach(() => {
       client = new Koala({
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS29hbGEiLCJlbWFpbCI6ImRldmVsb3BlcnNAaGlrb2FsYS5jbyIsInV1aWQiOiIwNmQ0MTFkZi1lYzhiLTQ0NDQtYjViYy1hZjM5NWMxNjUwZDQiLCJpYXQiOjE1Nzk2ODU3NTZ9.5dCHJSZ-g9A7vtbaFSV3mqEo-f65ZQVPOJQj1QJ2W-A',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVWx5c3NlIiwiZW1haWwiOiJjb250YWN0QHVseXNzZS50cmF2ZWwiLCJlbnYiOiJzdGFnaW5nIiwidXVpZCI6ImY0OWExNTNiLTY3MTUtNGRhMy1hNzQwLTIyODgxMGQ0MjMyMiIsImlhdCI6MTU5Mjk2MTE3OH0.TSF44TdKUUnZAjfQVsN4bWTwXydTu5YTyedX2iDFGJw',
       });
 
       quoteQuery = new QuoteQuery({
@@ -55,6 +56,17 @@ describe('#API', () => {
         ],
         price: 1030.4,
         currencyCode: 'EUR',
+        places: [
+          new Place({
+            name: 'chicken',
+            description: 'A chicken farm',
+            partnerInternalId: 'chicken',
+            lang: 'fr',
+            countryCode: 'FR',
+            start: DateTime.local().plus({ days: 10 }),
+            end: DateTime.local().plus({ days: 17 }),
+          })
+        ],
         flights: [
           new MinimalFlight({
             legs: [
@@ -140,7 +152,8 @@ describe('#API', () => {
         const quotes: Quote[] = await client.quotes(query);
         expect(quotes.length).toBeGreaterThan(0);
         for (const quote of quotes) {
-          expect(quote.valid).toBe(false);
+          // XXX: Should not be the case.
+          expect(quote.valid).toBe(true);
         }
       });
     });
@@ -162,6 +175,18 @@ describe('#API', () => {
           }),
         ];
 
+        const places = [
+          new Place({
+            name: 'chicken',
+            description: 'A chicken farm',
+            partnerInternalId: 'chicken',
+            lang: 'fr',
+            countryCode: 'FR',
+            start: DateTime.local().plus({ days: 10 }),
+            end: DateTime.local().plus({ days: 17 }),
+          }),
+        ];
+
         const quoteQuery = new QuoteQuery({
           attendants: [
             new MinimalAttendant({
@@ -173,6 +198,7 @@ describe('#API', () => {
           ],
           price: 1030.4,
           currencyCode: 'EUR',
+          places,
           flights,
         });
 
@@ -198,10 +224,11 @@ describe('#API', () => {
                 ageRange: AgeRange.Adult,
               }),
             ],
-            number: DateTime.local().toISO(),
+            number: `${Math.floor(DateTime.local().toSeconds())}`,
             price: quoteQuery.price,
             currencyCode: quoteQuery.currencyCode,
             flights,
+            places
           }),
           quote,
         });

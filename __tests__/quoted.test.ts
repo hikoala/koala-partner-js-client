@@ -1,4 +1,5 @@
 import QuotedLeg from '../src/types/quoted-leg';
+import QuotedPlace from '../src/types/quoted-place';
 import MinimalLeg from '../src/types/leg-min';
 import DateTime from '../src/types/date';
 import Policy from '../src/types/policy';
@@ -7,10 +8,12 @@ import QuotedBooking from '../src/types/quoted-booking';
 import MinimalAttendant from '../src/types/attendant-min';
 import AgeRange from '../src/types/age-range';
 
+
+const date = DateTime.fromISO('2020-07-24T00:25:15.277Z');
 const minimalLeg = new MinimalLeg({
   arrivalAirportIATA: 'CDG',
   departureAirportIATA: 'JFK',
-  departureDate: DateTime.fromJSDate(new Date()),
+  departureDate: date
 });
 const minimalLegJSON = minimalLeg.toJSON();
 const policy = new Policy({
@@ -24,6 +27,12 @@ const quotedLeg = new QuotedLeg({
 const quotedFlight = new QuotedFlight({
   legs: [quotedLeg],
   policy,
+});
+const quotedPlace = new QuotedPlace({
+  start: date,
+  end: date,
+  countryCode: 'FR',
+  policy
 });
 const attendant = new MinimalAttendant({ ageRange: AgeRange.Adult });
 
@@ -208,6 +217,7 @@ describe('#Quoted', () => {
         () =>
           new QuotedBooking({
             flights: [quotedFlight],
+            places: [quotedPlace],
             price: 100,
             policy: null,
             attendants: [],
@@ -220,6 +230,7 @@ describe('#Quoted', () => {
         () =>
           new QuotedBooking({
             flights: [quotedFlight],
+            places: [quotedPlace],
             price: null,
             policy,
             attendants: [],
@@ -232,6 +243,7 @@ describe('#Quoted', () => {
         () =>
           new QuotedBooking({
             flights: null,
+            places: [quotedPlace],
             price: 100,
             policy,
             attendants: [],
@@ -244,6 +256,7 @@ describe('#Quoted', () => {
         () =>
           new QuotedBooking({
             flights: [quotedFlight],
+            places: [quotedPlace],
             price: 100,
             policy,
             attendants: null,
@@ -254,6 +267,7 @@ describe('#Quoted', () => {
     it('should not be possible to create and copy', () => {
       const quote = new QuotedBooking({
         flights: [quotedFlight],
+        places: [quotedPlace],
         price: 100,
         policy,
         attendants: [attendant],
@@ -270,6 +284,7 @@ describe('#Quoted', () => {
             policy: null,
             price: 100,
             flights: [quotedFlight.toJSON()],
+            places: [quotedPlace.toJSON()],
             attendants: [attendant.toJSON()],
           }),
         ).toThrow('booking.policy is required');
@@ -280,6 +295,7 @@ describe('#Quoted', () => {
           QuotedBooking.fromJSON({
             policy: policy.toJSON(),
             price: null,
+            places: [quotedPlace.toJSON()],
             flights: [quotedFlight.toJSON()],
             attendants: [attendant.toJSON()],
           }),
@@ -292,6 +308,7 @@ describe('#Quoted', () => {
             policy: policy.toJSON(),
             price: 100,
             flights: null,
+            places: [quotedPlace.toJSON()],
             attendants: [attendant.toJSON()],
           }),
         ).toThrow('booking.flights is required');
@@ -303,6 +320,7 @@ describe('#Quoted', () => {
             policy: policy.toJSON(),
             price: 100,
             flights: [quotedFlight.toJSON()],
+            places: [quotedPlace.toJSON()],
             attendants: null,
           }),
         ).toThrow('booking.attendants is required');
@@ -314,10 +332,11 @@ describe('#Quoted', () => {
         const quote = QuotedBooking.fromJSON({
           policy: policy.toJSON(),
           flights: [quotedFlight.toJSON()],
+          places: [quotedPlace.toJSON()],
           price: 100,
           attendants: [attendant.toJSON()],
         });
-        expect(JSON.stringify(quote, Object.keys(quote).sort())).toStrictEqual(
+        expect(JSON.stringify(quote, Object.keys(quote).sort())).toEqual(
           JSON.stringify(
             {
               flights: [
@@ -342,6 +361,16 @@ describe('#Quoted', () => {
                     },
                   },
                 },
+              ],
+              places: [
+                {
+                  policy: {
+                    products: [1],
+                    price: {
+                      EUR: 100.3,
+                    },
+                  },
+                }
               ],
               price: 100,
               policy: {

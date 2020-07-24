@@ -1,10 +1,11 @@
 import Flight from './flight';
+import Place from './place';
 import { getField } from './validators';
 import BookingInterface from './interfaces/booking';
 import BookingJSON from './JSON/booking';
 import Attendant from './attendant';
 
-interface Interface extends BookingInterface<Flight, Attendant> {
+interface Interface extends BookingInterface<Flight, Attendant, Place> {
   number: string;
 }
 
@@ -17,6 +18,8 @@ export default class Booking implements Interface {
 
   attendants: Attendant[];
 
+  places: Place[];
+
   number: string;
 
   price: number;
@@ -25,6 +28,7 @@ export default class Booking implements Interface {
 
   constructor(data: Interface) {
     this.flights = getField(data.flights, 'booking.flights');
+    this.places = getField(data.places, 'booking.places');
     this.number = getField(data.number, 'booking.number');
     this.price = getField(data.price, 'booking.price');
     this.currencyCode = data.currencyCode ?? 'EUR';
@@ -36,6 +40,7 @@ export default class Booking implements Interface {
       number: getField(data.number, 'booking.number'),
       price: getField(data.price, 'booking.price'),
       flights: getField(data.flights, 'booking.flights').map(Flight.fromJSON),
+      places: getField(data.places, 'booking.places').map(Place.fromJSON),
       attendants: getField(data.attendants, 'booking.attendants').map(
         Attendant.fromJSON,
       ),
@@ -50,6 +55,7 @@ export default class Booking implements Interface {
       currency_code: this.currencyCode,
       attendants: this.attendants.map((a: Attendant) => a.toJSON()),
       flights: this.flights.map((f: Flight) => f.toJSON()),
+      places: this.places.map((p: Place) => p.toJSON()),
     };
   }
 }

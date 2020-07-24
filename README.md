@@ -35,8 +35,9 @@ Note: You can use `KOALA_PARTNER_TOKEN` to set token.
 import { Koala } from 'koala-partner-client';
 import {
   MinimalAttendant,
-  MinimalFlight,
-  MinimalLeg,
+  Flight,
+  Leg,
+  Place,
   QuoteQuery,
 } from 'koala-partner-client/lib/types';
 
@@ -53,7 +54,7 @@ const quoteQuery = new QuoteQuery({
   ],
   // The price of the booking (without ancillaries)
   price: 1030.4,
-  // The currency code of the booking.
+  // The currency code of the booking (ISO 4217).
   currencyCode: 'EUR',
   // The itinerary.
   flights: [
@@ -61,11 +62,17 @@ const quoteQuery = new QuoteQuery({
       // The different flights of the itinerary.
       legs: [
         new Leg({
+          // The IATA code of the departure airport.
           departureAirportIATA: 'CDG',
+          // The IATA code of the arrival airport.
           arrivalAirportIATA: 'JFK',
+          // The departure date as an ISO string (ISO 8601).
           departureDate: '2021-06-22T18:10:15+02:00',
+          // The departure date as an ISO string (ISO 8601).
           arrivalDate: '2021-06-22T21:10:15-04:00',
+          // The IATA of the airline.
           airlineIATA: 'AF',
+          // The flight number.
           flightNumber: '2131',
         }),
       ],
@@ -73,6 +80,7 @@ const quoteQuery = new QuoteQuery({
     new Flight({
       // The different flights of the itinerary.
       legs: [
+        // Same as before.
         new Leg({
           departureAirportIATA: 'JFK',
           arrivalAirportIATA: 'CDG',
@@ -82,6 +90,26 @@ const quoteQuery = new QuoteQuery({
           flightNumber: '2222',
         }),
       ],
+    }),
+  ],
+  // The places.
+  places: [
+    new Place({
+      // The display name of the activity / place.
+      name: 'Having lunch with your favorite actor',
+      // The description of the activity / place.
+      description:
+        'Have you ever dream to have diner with your favorite actor... We offer you that.',
+      // Your internal ID for the place (allows us to reuse places).
+      partnerInternalId: '01838481',
+      // The language of the name and description (ISO 639-1).
+      lang: 'en',
+      // The country code of the country (ISO 3166-1).
+      countryCode: 'FR',
+      // The start date of the activity (ISO 8601).
+      start: '2021-06-28T12:10:15+02:00',
+      // The end date of the activity (ISO 8601).
+      end: '2021-06-28T12:10:15+02:00',
     }),
   ],
 });
@@ -157,6 +185,8 @@ const subscribe = new SubscribeQuery({
     currencyCode: quoteQuery.currencyCode,
     // The flights from the quote query.
     flights: quoteQuery.flights,
+    // The places from teh quote query.
+    places: quoteQuery.places,
   }),
   // The unaltered quote.
   quote,

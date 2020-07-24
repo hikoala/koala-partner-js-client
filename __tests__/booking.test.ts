@@ -4,6 +4,7 @@ import Leg from '../src/types/leg';
 import DateTime from '../src/types/date';
 import Attendant from '../src/types/attendant';
 import AgeRange from '../src/types/age-range';
+import { Place } from '../src/types';
 
 const flight = new Flight({
   legs: [
@@ -18,6 +19,16 @@ const flight = new Flight({
   ],
 });
 
+const place = new Place({
+  start: DateTime.fromJSDate(new Date()),
+  end: DateTime.fromJSDate(new Date()),
+  countryCode: 'FR',
+  lang: 'fr',
+  name: 'place',
+  description: 'a place',
+  partnerInternalId: 'placeId'
+});
+
 const attendant = new Attendant({
   firstName: 'Manu',
   lastName: 'Macron',
@@ -28,6 +39,7 @@ const baseBooking = {
   number: 'ACACAC',
   price: 100,
   flights: [flight],
+  places: [place],
   attendants: [attendant],
 };
 const baseBookingJSON = JSON.parse(JSON.stringify(baseBooking));

@@ -11,6 +11,8 @@ export { default as Leg } from './leg';
 export { default as MinimalAttendant } from './attendant-min';
 export { default as MinimalFlight } from './flight-min';
 export { default as MinimalLeg } from './leg-min';
+export { default as Place } from './place';
+export { default as PlaceMin } from './place-min';
 export { default as Policy } from './policy';
 export { default as Quote } from './quote';
 export { default as QuotedBooking } from './quoted-booking';

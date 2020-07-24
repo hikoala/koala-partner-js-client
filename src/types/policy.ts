@@ -23,6 +23,7 @@ export default class Policy {
   }
 
   toJSON(): JSON {
-    return this as JSON;
+    // The ellipse avoids circular dependencies.
+    return { ...this } as JSON;
   }
 }
