@@ -1,6 +1,6 @@
 {
   "name": "koala-partner-client",
-  "version": "0.1.7",
+  "version": "1.0.0",
   "description": "Node client for the Koala partner API",
   "engines": {
     "node": ">= 14"
@@ -39,7 +39,7 @@
   "dependencies": {
     "@types/lodash": "^4.14.155",
     "axios": "^0.19.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "luxon": "^1.24.1",
     "node-fetch": "^2.6.0",
     "tslib": "~2.0.0"
